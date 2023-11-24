@@ -38,15 +38,17 @@ Basically speaking, there is a file in the source called cp.c ("copy protection"
 
 A function called color_is_on(), which is called on the regular, does three checks, in this order:
 
-1. Is the color display explicitly disabled in software?
+1. Is the color display explicitly disabled in software, or is something else telling us to disable the color mode?
 2. Is the confidence counter greater than 0x384?
-3. Did we successfully load the cgc.so file (which contains the encrypted color overlay data)?
+3. Did we successfully load the cgc.so file (which contains the encrypted color overlay data)? (This one's kind of important: failing to do this will crash the game.)
 
 If all conditions are met, return 1 (yes; enable color). Otherwise, return 0 (no; keep color disabled).
 
-The crack is therefore trivial: simply ignore the value of the confidence counter.
+The crack is therefore trivial: skip the first two checks. (The color overlay data is always loaded regardless of if the game has a color PIC or not.)
 
 ## The crack
+
+** Working patches coming soon. These only disable condition 2. I don't know, maybe it will work on your machine, but I don't have confidence in it.**
 
 One of the following find-and-replace jobs will do the trick:
 
