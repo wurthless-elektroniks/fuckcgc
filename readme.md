@@ -48,13 +48,10 @@ The crack is therefore trivial: skip the first two checks. (The color overlay da
 
 ## The crack
 
-** Working patches coming soon. These only disable condition 2. I don't know, maybe it will work on your machine, but I don't have confidence in it.**
+Try one of the following:
 
-One of the following find-and-replace jobs will do the trick:
-
-* Change 07 4B 1B 69 B3 F5 61 7F 05 DD to 07 4B 1B 69 B3 F5 61 74 00 BF
-* Change 09 4B DA 68 B2 F5 61 7F 05 DD to 09 4B DA 68 B2 F5 61 7F 00 BF
-* If you want to be *very* aggressive: Change F5 61 7F 05 DD to F5 61 7F 00 BF
+* MMr (not sure of software version), AFMr (v1.00): 08 4B D3 F8 74 04 48 B1 07 4B 1B 69 B3 F5 61 7F 05 DD --> 08 4B D3 F8 74 04 00 BF 07 4B 1B 69 B3 F5 61 7F 00 BF
+* MBr (v1.03): 0A 4B D3 F8 5C 02 78 B1 09 4B DA 68 B2 F5 61 7F 05 DD --> 0A 4B D3 F8 5C 02 00 BF 09 4B DA 68 B2 F5 61 7F 00 BF 
 
 ## How to crack
 
@@ -64,8 +61,10 @@ This method can leak information on the dirty pirate who cracked the software. A
 
 ### The basic workflow
 
+The following applies to MBr:
+
 1. Mount partition 3 of the main .img, or find where emmc.img is
-2. Mount Linux partition of emmc.img
+2. Mount Linux partition of emmc.img (should be partition 2)
 3. Find emumm in that Linux partition
 4. Crack it as described above
 5. Run "sync" in terminal to flush changes
