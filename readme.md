@@ -18,6 +18,8 @@ This was a project from years ago. I thought, "well, surely the pinball communit
 
 Images supported are:
 
+* MedievalMadness202Installer.ppf
+* AttackFromMars100Installer.ppf
 * MonsterBash103Installer.img
 
 **If you have problems:** The good news is that you can write the original image to the SD card and install the unmodified software if need be. The installer is just a fancy interface to dd.
@@ -36,11 +38,11 @@ Too bad. Data remanence is a bitch. You're able to recover a good deal of the em
 
 Basically speaking, there is a file in the source called cp.c ("copy protection"), and it sends supposedly random variables to the PIC. If the PIC does not return the expected responses, the game forces the color display feature off. However, if the game gets the responses it wants, it increases a "confidence" counter. Once that counter goes above 0x384, it says, "yeah, that's a color PIC".
 
-A function called color_is_on(), which is called on the regular, does three checks, in this order:
+A function called color_is_on(), which is called all the time, performs the following checks:
 
 1. Is the color display explicitly disabled in software, or is something else telling us to disable the color mode?
-2. Is the confidence counter greater than 0x384?
-3. Did we successfully load the cgc.so file (which contains the encrypted color overlay data)? (This one's kind of important: failing to do this will crash the game.)
+2. Is a RGB PIC installed (i.e., our confidence counter is greater than 0x384)? 
+3. Did we successfully load the cgc.so file (which contains the encrypted color overlay data)? (This one's kind of important: if there isn't any color data in memory, then attempting to access it will crash the game.)
 
 If all conditions are met, return 1 (yes; enable color). Otherwise, return 0 (no; keep color disabled).
 
@@ -50,9 +52,9 @@ The crack is therefore trivial: skip the first two checks. (The color overlay da
 
 Try one of the following:
 
-* MMr          08 4B D3 F8 74 04 48 B1 07 4B 1B 69 B3 F5 61 7F 05 DD --> 08 4B D3 F8 74 04 00 BF 07 4B 1B 69 B3 F5 61 7F 00 BF
-* AFMr (v1.0): 08 4B D3 F8 5C 02 48 B1 07 4B 1B 69 B3 F5 61 7F 05 DD --> 08 4B D3 F8 5C 02 00 BF 07 4B 1B 69 B3 F5 61 7F 00 BF
-* MBr (v1.3): 0A 4B D3 F8 5C 02 78 B1 09 4B DA 68 B2 F5 61 7F 05 DD --> 0A 4B D3 F8 5C 02 00 BF 09 4B DA 68 B2 F5 61 7F 00 BF 
+* MMr (v2.0.2): Change `08 4B D3 F8 74 04 48 B1 07 4B 1B 69 B3 F5 61 7F 05 DD` to `08 4B D3 F8 74 04 00 BF 07 4B 1B 69 B3 F5 61 7F 00 BF`
+* AFMr (v1.0.0): Change `08 4B D3 F8 5C 02 48 B1 07 4B 1B 69 B3 F5 61 7F 05 DD` to `08 4B D3 F8 5C 02 00 BF 07 4B 1B 69 B3 F5 61 7F 00 BF`
+* MBr (v1.0.3): Change `0A 4B D3 F8 5C 02 78 B1 09 4B DA 68 B2 F5 61 7F 05 DD` to `0A 4B D3 F8 5C 02 00 BF 09 4B DA 68 B2 F5 61 7F 00 BF`
 
 ## How to crack
 
