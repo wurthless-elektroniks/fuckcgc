@@ -10,7 +10,8 @@ This was a project from years ago. I thought, "well, surely the pinball communit
 4. Write patched disk image to 8 GB microSD card
 5. Put microSD card into your game
 6. Run installer as normal
-7. Reboot your game and hope nothing blows up
+7. Remove microSD card from your game and reboot
+8. If everything worked, you'll have pretty color pictures on your LCD
 
 ## Supported images
 
@@ -18,11 +19,16 @@ This was a project from years ago. I thought, "well, surely the pinball communit
 
 Images supported are:
 
-* MedievalMadness202Installer.ppf
-* AttackFromMars100Installer.ppf
+* MedievalMadness202Installer.img
+* AttackFromMars100Installer.img
 * MonsterBash103Installer.img
 
-**If you have problems:** The good news is that you can write the original image to the SD card and install the unmodified software if need be. The installer is just a fancy interface to dd.
+Games that will never be supported:
+
+* Cactus Canyon (all versions are in color, anyway)
+* Whatever other WPC remakes that CGC release after this
+
+**If you have problems:** The good news is that you can write the original unpatched image to the SD card and reinstall the unmodified software if need be. The CGC installer is just a fancy interface to dd.
 
 ## Why do this?
 
@@ -30,13 +36,13 @@ The CGC remakes are amateur hour. Not only do they not fix any issues that the o
 
 Which leads us to the topic of discussion. The "color upgrade kits" in circulation are nothing more than a playfield microcontroller replacement that tells the game that it's allowed to display in color, as well as a SD card. But how, exactly, do they work? Well, I got bored a few years ago and looked into it, and had a good laff or three while I analyzed the code.
 
-The CGC remakes run on Beaglebone Black hardware, and apparently whoever built the disk images for the software updates had been using his Beaglebone as a SNES emulator because there are traces of SNES ROMs present. But what was more amazing was the fact that this guy didn't use a cross-compiler and instead built the emulator on the Beaglebone itself, then deleted the sourcecode files afterward, saying, "okay, we can say this thing is closed source!"
+The CGC remakes run on Beaglebone Black hardware, and apparently whoever built the disk images for the software updates had been using his Beaglebone as a SNES emulator because there are traces of SNES ROMs present. But what was more amazing was the fact that this guy didn't use a cross-compiler and instead built the WPC emulator (named emumm) on the Beaglebone itself, then deleted the sourcecode files afterward, saying, "okay, we can say this thing is closed source!"
 
-Too bad. Data remanence is a bitch. You're able to recover a good deal of the emulator's source code using nothing more than a hex editor, including the color overlay code. That will probably be the focus of another project down the line (i.e., using the remakes' color data to colorize the original Williams machines).
+Too bad. Data remanence is a bitch. You're able to recover a good deal of the WPC emulator's source code using nothing more than a hex editor, including the color overlay code. That will probably be the focus of another project down the line (i.e., using the remakes' color data to colorize the original Williams machines).
 
 ## How the protection works
 
-Basically speaking, there is a file in the source called cp.c ("copy protection"), and it sends supposedly random variables to the PIC. If the PIC does not return the expected responses, the game forces the color display feature off. However, if the game gets the responses it wants, it increases a "confidence" counter. Once that counter goes above 0x384, it says, "yeah, that's a color PIC".
+Basically speaking, there is a file in the source called cp.c ("copy protection"), and it sends supposedly random variables to the PIC. If the PIC does not return the expected responses, the game forces the color display feature off. However, if the game gets the responses it wants, it increases a "confidence" counter. Once that counter goes above 0x384 (900 in decimal, i.e., 90%), it says, "yeah, that's a color PIC".
 
 A function called color_is_on(), which is called all the time, performs the following checks:
 
@@ -83,6 +89,34 @@ If CGC ask politely I will take this repository down, but, in all honesty, I hop
 ## Special thanks
 
 Bad assumptions were made by Steve Ellenoff
+
+## Bonus: SNES ROM Wall of Shame
+
+At some point, the following ROMs had been on the installer's SD card. Actually, they still are. They were contained in a .zip, which can be recovered using a hex editor. Open up your favorite hex editor, extract the .zip from the disk image (identifiable by the PKzip headers), and you can play the following Super Nintendo games, free of charge:
+
+* Marvel Super Heroes - War of the Gems.smc
+* Mega Man X.smc
+* Mr. Do!.smc
+* Pilotwings.smc
+* Plok!.smc
+* Princess Maker - Legend of Another World.smc
+* Super Bomberman 5.smc
+* Super Punch-Out!!.smc
+* Super Star Wars - Empire Strikes Back.smc
+* Teenage Mutant Ninja Turtles - Mutant Warriors.smc
+* Teenage Mutant Ninja Turtles 4 - Turtles in Time.smc
+* X-Men Mutant Apocalypse.smc
+
+Ones that can't be recovered anymore (maybe):
+
+* Aladdin.smc
+* Bust-A-Move.smc
+* Classic Kong.smc
+* Dekitate High School.smc
+* Firemen.smc
+* Harvest Moon.smc
+* Kid Klown in Crazy Chase.smc
+* Kirby Superstar.smc
 
 ## License
 
