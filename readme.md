@@ -50,8 +50,9 @@ The crack is therefore trivial: skip the first two checks. (The color overlay da
 
 Try one of the following:
 
-* MMr (not sure of software version), AFMr (v1.00): 08 4B D3 F8 74 04 48 B1 07 4B 1B 69 B3 F5 61 7F 05 DD --> 08 4B D3 F8 74 04 00 BF 07 4B 1B 69 B3 F5 61 7F 00 BF
-* MBr (v1.03): 0A 4B D3 F8 5C 02 78 B1 09 4B DA 68 B2 F5 61 7F 05 DD --> 0A 4B D3 F8 5C 02 00 BF 09 4B DA 68 B2 F5 61 7F 00 BF 
+* MMr          08 4B D3 F8 74 04 48 B1 07 4B 1B 69 B3 F5 61 7F 05 DD --> 08 4B D3 F8 74 04 00 BF 07 4B 1B 69 B3 F5 61 7F 00 BF
+* AFMr (v1.0): 08 4B D3 F8 5C 02 48 B1 07 4B 1B 69 B3 F5 61 7F 05 DD --> 08 4B D3 F8 5C 02 00 BF 07 4B 1B 69 B3 F5 61 7F 00 BF
+* MBr (v1.3): 0A 4B D3 F8 5C 02 78 B1 09 4B DA 68 B2 F5 61 7F 05 DD --> 0A 4B D3 F8 5C 02 00 BF 09 4B DA 68 B2 F5 61 7F 00 BF 
 
 ## How to crack
 
